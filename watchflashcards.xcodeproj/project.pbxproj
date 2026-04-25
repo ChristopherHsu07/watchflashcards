@@ -40,9 +40,9 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		55E8DF072F9C792F00EC2CF7 /* watchflashcards */ = {
+		55E8DF072F9C792F00EC2CF7 /* watchflashcards iPhone App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = watchflashcards;
+			path = "watchflashcards iPhone App";
 			sourceTree = "<group>";
 		};
 		55E8DF162F9C793000EC2CF7 /* watchflashcards Watch App */ = {
@@ -73,7 +73,7 @@
 		55E8DEFC2F9C792E00EC2CF7 = {
 			isa = PBXGroup;
 			children = (
-				55E8DF072F9C792F00EC2CF7 /* watchflashcards */,
+				55E8DF072F9C792F00EC2CF7 /* watchflashcards iPhone App */,
 				55E8DF162F9C793000EC2CF7 /* watchflashcards Watch App */,
 				55E8DF062F9C792F00EC2CF7 /* Products */,
 			);
@@ -106,7 +106,7 @@
 				55E8DF152F9C793000EC2CF7 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				55E8DF072F9C792F00EC2CF7 /* watchflashcards */,
+				55E8DF072F9C792F00EC2CF7 /* watchflashcards iPhone App */,
 			);
 			name = watchflashcards;
 			packageProductDependencies = (
