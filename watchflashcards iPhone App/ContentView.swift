@@ -16,7 +16,7 @@ struct FlashcardSet: Identifiable {
 }
 
 struct ContentView: View {
-    private let flashcardSets: [FlashcardSet] = [
+    @State private var flashcardSets: [FlashcardSet] = [
         FlashcardSet(
             title: "Sample Set Test",
             cardCount: 5,
@@ -34,46 +34,84 @@ struct ContentView: View {
         )
     ]
 
+    @State private var isManagingSets = false
+
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                Text("Flashcard Sets")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding(.top, 8)
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("Flashcard Sets")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .padding(.top, 8)
 
-                Text("Choose a set to practice soon.")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    Text("Choose a set to practice soon.")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
 
-                LazyVStack(spacing: 12) {
-                    ForEach(flashcardSets) { set in
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text(set.title)
-                                .font(.headline)
-                            Text("\(set.cardCount) cards")
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
-                            Text(set.description)
-                                .font(.footnote)
-                                .foregroundStyle(.secondary)
-                                .lineLimit(2)
+                    LazyVStack(spacing: 12) {
+                        ForEach(flashcardSets) { set in
+                            HStack(alignment: .center, spacing: 12) {
+                                if isManagingSets {
+                                    Button("Edit") {
+                                        // Card editing — coming later
+                                    }
+                                    .buttonStyle(.bordered)
+                                    .controlSize(.small)
+                                }
+
+                                VStack(alignment: .leading, spacing: 8) {
+                                    Text(set.title)
+                                        .font(.headline)
+                                    Text("\(set.cardCount) cards")
+                                        .font(.subheadline)
+                                        .foregroundStyle(.secondary)
+                                    Text(set.description)
+                                        .font(.footnote)
+                                        .foregroundStyle(.secondary)
+                                        .lineLimit(2)
+                                }
+                                .frame(maxWidth: .infinity, alignment: .leading)
+
+                                if isManagingSets {
+                                    Button(role: .destructive) {
+                                        flashcardSets.removeAll { $0.id == set.id }
+                                    } label: {
+                                        Image(systemName: "trash")
+                                    }
+                                    .buttonStyle(.bordered)
+                                    .controlSize(.small)
+                                }
+                            }
+                            .padding()
+                            .background(
+                                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                    .fill(Color(.secondarySystemBackground))
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                    .stroke(Color.black.opacity(0.05), lineWidth: 1)
+                            )
                         }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                .fill(Color(.secondarySystemBackground))
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                .stroke(Color.black.opacity(0.05), lineWidth: 1)
-                        )
+                    }
+                    .padding(.top, 8)
+                    .animation(.default, value: flashcardSets.map(\.id))
+                }
+                .padding()
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    if isManagingSets {
+                        Button("Done") {
+                            isManagingSets = false
+                        }
+                    } else {
+                        Button("Edit") {
+                            isManagingSets = true
+                        }
                     }
                 }
-                .padding(.top, 8)
             }
-            .padding()
         }
     }
 }
